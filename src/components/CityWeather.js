@@ -8,13 +8,18 @@ const cities = [
 
 const CityWeather = () => {
   const [selectedCity, setSelectedCity] = useState('');
-  const [cityWeather, setCityWeather] = useState(null);
+  const [view, setView] = useState('current'); // 'current' or 'historical'
 
   const handleCityChange = (e) => {
     const selectedCity = e.target.value;
     setSelectedCity(selectedCity);
+    setView('current'); // Reset to current view when city changes
     // Fetch weather data for the selected city
     // You can use a similar approach as in the Weather component
+  };
+
+  const handleViewChange = (newView) => {
+    setView(newView);
   };
 
   return (
@@ -30,10 +35,22 @@ const CityWeather = () => {
           </option>
         ))}
       </select>
-      {cityWeather && (
+      <div>
+        <button onClick={() => handleViewChange('current')}>Current Weather</button>
+        <button onClick={() => handleViewChange('historical')}>Historical Weather</button>
+      </div>
+      {view === 'current' && (
         <div>
-          <h3>Weather in {selectedCity}</h3>
-          {/* Display weather data for the selected city */}
+          <h3>Current Weather in {selectedCity}</h3>
+          {/* Display current weather data for the selected city */}
+          <Weather latitude={/* latitude of selectedCity */} longitude={/* longitude of selectedCity */} />
+        </div>
+      )}
+      {view === 'historical' && (
+        <div>
+          <h3>Historical Weather in {selectedCity}</h3>
+          {/* Add UI to pick a date and display historical weather data */}
+          {/* You can use the API call to request history daily aggregation data */}
         </div>
       )}
     </div>
