@@ -1,106 +1,121 @@
-import { useEffect, useState } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
+import Loader from './Loader';
 
-const Weather = () => {
-  const [location, setLocation] = useState(null);
+const Weather = ({ latitude, longitude, isFiveDayForecast }) => {
   const [weatherData, setWeatherData] = useState(null);
-
-  useEffect(() => {
-    const getLocation = async () => {
-      try {
-        if (navigator.geolocation) {
-          const position = await getCurrentPosition();
-          const { latitude, longitude } = position.coords;
-          const locationData = await fetchLocation(latitude, longitude);
-          setLocation({ latitude, longitude, ...locationData });
-        } else {
-          console.error('Geolocation is not supported by this browser.');
-        }
-      } catch (error) {
-        console.error('Error getting location:', error);
-      }
-    };
-
-    const getCurrentPosition = () => {
-      return new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(
-          (position) => resolve(position),
-          (error) => reject(error)
-        );
-      });
-    };
-
-    const fetchLocation = async (latitude, longitude) => {
-      try {
-        const apiKey = import.meta.env.VITE_OPENWEATHERMAP_API_KEY;
-        const response = await axios.get(
-          `http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${apiKey}`
-        );
-        return response.data[0];
-      } catch (error) {
-        console.error('Error fetching location:', error);
-        return null;
-      }
-    };
-    // Llamamos a las funciones al montar el componente
-    getLocation();
-  }, []);
+  const [isLoading, setIsLoading] = useState(true);
 
 
   useEffect(() => {
     const fetchWeather = async () => {
       try {
         const apiKey = import.meta.env.VITE_OPENWEATHERMAP_API_KEY;
-        const response = await axios.get(
-          `https://api.openweathermap.org/data/3.0/onecall?lat=${location.latitude}&lon=${location.longitude}&appid=${apiKey}`
-        );
+        let endpoint;
+        
+        if (latitude && longitude) {
+        endpoint = isFiveDayForecast
+        ? `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}`
+        : `https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}`;
+      }else {
+          console.error('Invalid parameters for Weather component');
+          return;
+        }
+
+        const response = await axios.get(endpoint);
         setWeatherData(response.data);
       } catch (error) {
         console.error('Error fetching weather data:', error);
+      }finally {
+        setIsLoading(false); // Indicar que la carga ha finalizado, ya sea con éxito o error.
       }
     };
 
     // Llamamos a la función de obtener datos meteorológicos cuando la geolocalización está disponible
-    if (location && location.latitude && location.longitude) {
+    if (latitude && longitude) {
       fetchWeather();
     }
-  }, [location]); // Volvemos a ejecutar este efecto cuando cambie la ubicación
+  }, [latitude, longitude, isFiveDayForecast ]); // Volvemos a ejecutar este efecto cuando cambie la ubicación
 
-  if (!location || !weatherData) {
-    return <div>Loading...</div>;
+  if (isLoading ||!weatherData) {
+    return <Loader/>;
   }
 
   const convertKelvinToCelsius = (kelvin) => {
     return (kelvin - 273.15).toFixed(1);
   };
 
+  // Obtén la fecha actual
+const today = new Date();
+today.setHours(0, 0, 0, 0); // Establece las horas a 00:00:00 para comparaciones de fechas
+
+// Filtra los datos para obtener solo los primeros intervalos de cada día
+const next5DaysData = weatherData.list.reduce((result, data) => {
+  const dataDate = new Date(data.dt_txt);
+  dataDate.setHours(0, 0, 0, 0); // Establece las horas a 00:00:00 para comparaciones de fechas
+
+  // Verifica si la fecha es después de hoy y si aún no tenemos datos para ese día
+  if (dataDate.getTime() > today.getTime() && !result.some(dayData => dayData.dt_date.getTime() === dataDate.getTime())) {
+    // Agrega este día a los datos resultantes
+    result.push({
+      dt: data.dt,
+      dt_txt: data.dt_txt,
+      weather: {
+        main: data.weather[0].main,
+        description: data.weather[0].description,
+      },
+      temp: data.main.temp,
+      dt_date: dataDate, // Añade la fecha del día para futuras comparaciones
+    });
+  }
+
+  return result;
+}, []).slice(0, 5); // Toma solo los primeros 5 elementos
+
+
   return (
-    <div>
-    <h2>Weather in {location.name}, {location.country}</h2>
-    <div>
-      <h2>Weather Forecast</h2>
       <div>
-        <strong>Current Temperature:</strong> {weatherData.current.temp} K
+        {isFiveDayForecast ? (
+          <>
+            <h2>Daily Forecast</h2>
+            <ul>
+              {next5DaysData.daily.map((data) => (
+                <li key={data.dt}>
+                  {new Date(data.dt * 1000).toLocaleDateString()}: {data.weather.main},{data.weather.description},
+                  {convertKelvinToCelsius(data.temp)} °C
+                  <img
+                  src={`http://openweathermap.org/img/w/${data.weather.icon}.png`}
+                  alt={data.weather.description}
+                  />
+                </li>
+              ))}
+            </ul>
+          </>
+        ) : (
+          <>
+            <h2>Current Weather</h2>
+            <div>
+              <strong>Current Temperature:</strong> {convertKelvinToCelsius(weatherData.current.temp)} °C
+            </div>
+            <div>
+              <strong>Current Weather:</strong> {weatherData.current.weather[0].description}
+            </div>
+            <img
+              src={`http://openweathermap.org/img/w/${weatherData.current.weather[0].icon}.png`}
+              alt={weatherData.current.weather[0].description}
+            />
+          </>
+        )}
       </div>
-      <div>
-        <strong>Current Weather:</strong> {weatherData.current.weather[0].description}
-      </div>
-      <img
-        src={`http://openweathermap.org/img/w/${weatherData.current.weather[0].icon}.png`}
-        alt={weatherData.current.weather[0].description}
-      />
-      <h3>Daily Forecast</h3>
-      <ul>
-        {weatherData.daily.map((day) => (
-          <li key={day.dt}>
-            {new Date(day.dt * 1000).toLocaleDateString()}: {day.weather[0].description},
-            {convertKelvinToCelsius(day.temp.day)} °C
-          </li>
-        ))}
-      </ul>
-    </div>
-   </div>
-  );
+    );
+    
+};
+
+Weather.propTypes = {
+  latitude: PropTypes.number.isRequired,
+  longitude: PropTypes.number.isRequired,
+  isFiveDayForecast: PropTypes.bool,
 };
 
 export default Weather;

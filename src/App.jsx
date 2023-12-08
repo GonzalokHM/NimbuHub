@@ -1,7 +1,8 @@
-import axios from 'axios';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
-import Weather from './components/Weather';
-import CityWeather from './components/CityWeather';
+import LocalWeatherPage from './components/LocationWeatherPage';
+import CityWeatherPage from './components/CityWeatherPage';
+import LocalForecastPage from './LocalForecastPage';
+import CityForecastPage from './CityForecastPage';
 import './App.css'
 
 function App() {
@@ -17,19 +18,27 @@ function App() {
           <li>
             <Link to="/city">City Weather</Link>
           </li>
+          <li>
+            <Link to="/localForecast">Local Forecas</Link>
+          </li>
+          <li>
+            <Link to="/cityForecast">City Forecast</Link>
+          </li>
         </ul>
       </nav>
 
       <Switch>
-        <Route path="/city">
-          <CityWeather />
-        </Route>
         <Route path="/">
-          {/* Use the Geolocation API to get user's location */}
-          {/* Pass the latitude and longitude to the Weather component */}
-          {/* You can use the Geolocation API as shown below or use a library like 'react-geolocated' */}
-          {/* <Geolocation render={({ coords }) => <Weather latitude={coords.latitude} longitude={coords.longitude} />} /> */}
-          <Weather />
+          <LocalWeatherPage />
+        </Route>
+        <Route path="/city">
+          <CityWeatherPage />
+        </Route>
+        <Route path="/localForecast">
+          <LocalForecastPage />
+        </Route>
+        <Route path="/cityForecast">
+          <CityForecastPage />
         </Route>
       </Switch>
     </div>
