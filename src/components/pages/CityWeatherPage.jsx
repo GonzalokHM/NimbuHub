@@ -1,4 +1,4 @@
-import CityWeather from './CityWeather';
+import CityWeather from '../CityWeather';
 
 const CityWeatherPage = () => {
   return (

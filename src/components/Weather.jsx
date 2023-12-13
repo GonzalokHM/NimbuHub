@@ -6,7 +6,7 @@ import Loader from './Loader';
 const Weather = ({ latitude, longitude, isFiveDayForecast }) => {
   const [weatherData, setWeatherData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
+  const [next5DaysData, setNext5DaysData] = useState([]);
 
   useEffect(() => {
     const fetchWeather = async () => {
@@ -34,31 +34,20 @@ const Weather = ({ latitude, longitude, isFiveDayForecast }) => {
 
     // Llamamos a la función de obtener datos meteorológicos cuando la geolocalización está disponible
     if (latitude && longitude) {
-      fetchWeather();
-    }
-  }, [latitude, longitude, isFiveDayForecast ]); // Volvemos a ejecutar este efecto cuando cambie la ubicación
+      fetchWeather().then(() => {
+        if (isFiveDayForecast && weatherData && weatherData.list) {
+         // Obtén la fecha actual
+         const today = new Date();
+         today.setHours(0, 0, 0, 0); // Establece las horas a 00:00:00 para comparaciones de fechas
+          // Procesar los datos aquí y actualizar next5DaysData con setNext5DaysData
+          const processedData = weatherData.list.reduce((result, data) => {
+            const dataDate = new Date(data.dt_txt);
+          dataDate.setHours(0, 0, 0, 0); // Establece las horas a 00:00:00 para comparaciones de fechas
 
-  if (isLoading ||!weatherData) {
-    return <Loader/>;
-  }
-
-  const convertKelvinToCelsius = (kelvin) => {
-    return (kelvin - 273.15).toFixed(1);
-  };
-
-  // Obtén la fecha actual
-const today = new Date();
-today.setHours(0, 0, 0, 0); // Establece las horas a 00:00:00 para comparaciones de fechas
-
-// Filtra los datos para obtener solo los primeros intervalos de cada día
-const next5DaysData = weatherData.list.reduce((result, data) => {
-  const dataDate = new Date(data.dt_txt);
-  dataDate.setHours(0, 0, 0, 0); // Establece las horas a 00:00:00 para comparaciones de fechas
-
-  // Verifica si la fecha es después de hoy y si aún no tenemos datos para ese día
-  if (dataDate.getTime() > today.getTime() && !result.some(dayData => dayData.dt_date.getTime() === dataDate.getTime())) {
-    // Agrega este día a los datos resultantes
-    result.push({
+    // Verifica si la fecha es después de hoy y si aún no tenemos datos para ese día
+    if (dataDate.getTime() > today.getTime() && !result.some(dayData => dayData.dt_date.getTime() === dataDate.getTime())) {
+      // Agrega este día a los datos resultantes
+      result.push({
       dt: data.dt,
       dt_txt: data.dt_txt,
       weather: {
@@ -71,7 +60,24 @@ const next5DaysData = weatherData.list.reduce((result, data) => {
   }
 
   return result;
-}, []).slice(0, 5); // Toma solo los primeros 5 elementos
+}, []).slice(0, 5);
+
+        setNext5DaysData(processedData);
+        }
+      });
+    }
+  }, [latitude, longitude, isFiveDayForecast ]); // Volvemos a ejecutar este efecto cuando cambie la ubicación
+ 
+  if (isLoading ||!weatherData) {
+    return <Loader/>;
+  }
+
+  const convertKelvinToCelsius = (kelvin) => {
+    return (kelvin - 273.15).toFixed(1);
+  };
+
+
+
 
 
   return (
@@ -80,7 +86,7 @@ const next5DaysData = weatherData.list.reduce((result, data) => {
           <>
             <h2>Daily Forecast</h2>
             <ul>
-              {next5DaysData.daily.map((data) => (
+              {next5DaysData.map((data) => (
                 <li key={data.dt}>
                   {new Date(data.dt * 1000).toLocaleDateString()}: {data.weather.main},{data.weather.description},
                   {convertKelvinToCelsius(data.temp)} °C

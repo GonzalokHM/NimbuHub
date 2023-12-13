@@ -1,8 +1,8 @@
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
-import LocalWeatherPage from './components/LocationWeatherPage';
-import CityWeatherPage from './components/CityWeatherPage';
-import LocalForecastPage from './LocalForecastPage';
-import CityForecastPage from './CityForecastPage';
+import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
+import LocalWeatherPage from './components/pages/LocalWeatherPage';
+import CityWeatherPage from './components/pages/CityWeatherPage'
+import LocalForecastPage from './components/pages/LocalForecastPage';
+import CityForecastPage from './components/pages/CityForecastPage';
 import './App.css'
 
 function App() {
@@ -27,20 +27,12 @@ function App() {
         </ul>
       </nav>
 
-      <Switch>
-        <Route path="/">
-          <LocalWeatherPage />
-        </Route>
-        <Route path="/city">
-          <CityWeatherPage />
-        </Route>
-        <Route path="/localForecast">
-          <LocalForecastPage />
-        </Route>
-        <Route path="/cityForecast">
-          <CityForecastPage />
-        </Route>
-      </Switch>
+      <Routes>
+       <Route path="/" element={<LocalWeatherPage />} />
+       <Route path="/city" element={<CityWeatherPage />} />
+       <Route path="/localForecast" element={<LocalForecastPage />} />
+       <Route path="/cityForecast" element={<CityForecastPage />} />
+      </Routes>
     </div>
   </Router>
   )

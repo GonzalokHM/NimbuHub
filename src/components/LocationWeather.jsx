@@ -37,7 +37,7 @@ const LocalWeather = () => {
 
     const fetchLocation = async (latitude, longitude) => {
       try {
-        const apiKey = 'YOUR_OPENWEATHERMAP_API_KEY';
+        const apiKey = import.meta.env.VITE_OPENWEATHERMAP_API_KEY;
         const response = await axios.get(
           `http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${apiKey}`
         );

@@ -1,4 +1,4 @@
-import LocationWeather from './LocationWeather';
+import LocationWeather from '../LocationWeather';
 
 const LocalForecastPage = () => {
   return (
