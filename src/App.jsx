@@ -9,19 +9,19 @@ function App() {
 
   return (
     <Router>
-    <div>
-      <nav>
-        <ul>
-          <li>
+    <div id='container'>
+      <nav id='nav'>
+        <ul id='links'>
+          <li className='link'>
             <Link to="/">Home</Link>
           </li>
-          <li>
+          <li className='link'>
             <Link to="/city">City Weather</Link>
           </li>
-          <li>
+          <li className='link'>
             <Link to="/localForecast">Local Forecas</Link>
           </li>
-          <li>
+          <li className='link'>
             <Link to="/cityForecast">City Forecast</Link>
           </li>
         </ul>

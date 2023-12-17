@@ -1,8 +1,8 @@
-import LocationWeather from '../LocationWeather';
+import LocalWeather from '../LocationWeather';
 
 const LocalForecastPage = () => {
   return (
-    <LocationWeather isForecast={true} />
+    <LocalWeather isFiveDayForecast={true} />
   );
 };
 

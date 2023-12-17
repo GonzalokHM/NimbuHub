@@ -7,23 +7,25 @@ const Weather = ({ latitude, longitude, isFiveDayForecast }) => {
   const [weatherData, setWeatherData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [next5DaysData, setNext5DaysData] = useState([]);
-
+  console.log("isFiveDayForecast antes:", isFiveDayForecast);
   useEffect(() => {
     const fetchWeather = async () => {
       try {
         const apiKey = import.meta.env.VITE_OPENWEATHERMAP_API_KEY;
         let endpoint;
-        
+        console.log("isFiveDayForecast dentro fecthWeather:", isFiveDayForecast);
         if (latitude && longitude) {
-        endpoint = isFiveDayForecast
-        ? `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}`
-        : `https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}`;
-      }else {
+          endpoint = isFiveDayForecast
+          ? `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}`
+          : `https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}`;
+        }else {
           console.error('Invalid parameters for Weather component');
           return;
         }
-
+        
+        console.log("endpoin:", endpoint);
         const response = await axios.get(endpoint);
+        console.log("API response data:", response.data);
         setWeatherData(response.data);
       } catch (error) {
         console.error('Error fetching weather data:', error);
@@ -31,10 +33,12 @@ const Weather = ({ latitude, longitude, isFiveDayForecast }) => {
         setIsLoading(false); // Indicar que la carga ha finalizado, ya sea con éxito o error.
       }
     };
-
     // Llamamos a la función de obtener datos meteorológicos cuando la geolocalización está disponible
     if (latitude && longitude) {
-      fetchWeather().then(() => {
+      fetchWeather()
+    }
+  },[latitude, longitude, isFiveDayForecast])
+    useEffect(() => {
         if (isFiveDayForecast && weatherData && weatherData.list) {
          // Obtén la fecha actual
          const today = new Date();
@@ -47,7 +51,7 @@ const Weather = ({ latitude, longitude, isFiveDayForecast }) => {
     // Verifica si la fecha es después de hoy y si aún no tenemos datos para ese día
     if (dataDate.getTime() > today.getTime() && !result.some(dayData => dayData.dt_date.getTime() === dataDate.getTime())) {
       // Agrega este día a los datos resultantes
-      result.push({
+      result.push({ 
       dt: data.dt,
       dt_txt: data.dt_txt,
       weather: {
@@ -55,6 +59,7 @@ const Weather = ({ latitude, longitude, isFiveDayForecast }) => {
         description: data.weather[0].description,
       },
       temp: data.main.temp,
+      humidity: data.main.humidity,
       dt_date: dataDate, // Añade la fecha del día para futuras comparaciones
     });
   }
@@ -64,9 +69,8 @@ const Weather = ({ latitude, longitude, isFiveDayForecast }) => {
 
         setNext5DaysData(processedData);
         }
-      });
-    }
-  }, [latitude, longitude, isFiveDayForecast ]); // Volvemos a ejecutar este efecto cuando cambie la ubicación
+     // Volvemos a ejecutar este efecto cuando cambie la ubicación o isFiveDayForecast
+  }, [weatherData, isFiveDayForecast]);// eslint-disable-line react-hooks/exhaustive-deps
  
   if (isLoading ||!weatherData) {
     return <Loader/>;
@@ -84,12 +88,16 @@ const Weather = ({ latitude, longitude, isFiveDayForecast }) => {
       <div>
         {isFiveDayForecast ? (
           <>
-            <h2>Daily Forecast</h2>
+            <h3>Daily Forecast</h3>
             <ul>
               {next5DaysData.map((data) => (
-                <li key={data.dt}>
-                  {new Date(data.dt * 1000).toLocaleDateString()}: {data.weather.main},{data.weather.description},
-                  {convertKelvinToCelsius(data.temp)} °C
+                <li className='forecastList' key={data.dt}>
+                  <div>
+                  <h4>{new Date(data.dt * 1000).toLocaleDateString()}</h4> 
+                  <p>{data.weather.main}, {data.weather.description}</p>
+                  <p>Humidity: {data.humidity}%</p>
+                  <p>Temperature: {convertKelvinToCelsius(data.temp)}°C</p>
+                  </div>
                   <img
                   src={`http://openweathermap.org/img/w/${data.weather.icon}.png`}
                   alt={data.weather.description}
@@ -99,19 +107,23 @@ const Weather = ({ latitude, longitude, isFiveDayForecast }) => {
             </ul>
           </>
         ) : (
-          <>
-            <h2>Current Weather</h2>
-            <div>
-              <strong>Current Temperature:</strong> {convertKelvinToCelsius(weatherData.current.temp)} °C
+          <div className="currentWeatherContainer">
+            <h3>Current Weather</h3>
+            <div className="current-weather">
+              <p>
+              <strong>Temperature:</strong> {convertKelvinToCelsius(weatherData.current.temp)} °C
+              </p>
+              <p>
+              <strong>Weather:</strong> {weatherData.current.weather[0].description}
+              </p>
             </div>
-            <div>
-              <strong>Current Weather:</strong> {weatherData.current.weather[0].description}
-            </div>
+            <div className='imgContainer'>
             <img
               src={`http://openweathermap.org/img/w/${weatherData.current.weather[0].icon}.png`}
               alt={weatherData.current.weather[0].description}
             />
-          </>
+            </div>
+          </div>
         )}
       </div>
     );

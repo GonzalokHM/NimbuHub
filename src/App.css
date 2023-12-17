@@ -1,42 +1,120 @@
 #root {
   max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  flex: auto;
+}
+
+#container {
+  display: flex;
   text-align: center;
+  flex-direction: column;
+  align-items: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+#nav {
+  background-color: #f0f8ff; /* color claro, puedes ajustarlo */
+  border-radius: 20px;
+  padding: 10px;
+  margin: 0 auto;
+  max-width: 600px; /* Ajusta según tus necesidades */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* sombra ligera para dar efecto 3D */
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-around; /* Distribuye los elementos de manera uniforme */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.link {
+  padding: 10px 20px;
 }
 
-.card {
-  padding: 2em;
+.link a {
+  text-decoration: none;
+  color: #333; /* Color del texto, ajusta según tus preferencias */
+  font-weight: bold;
 }
 
-.read-the-docs {
-  color: #888;
+h3 {
+  text-align: center;
+  color: #7d93ff; /* Color del texto */
+  margin-bottom: 20px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 600px; /* Ajusta el ancho máximo según tus necesidades */
+}
+
+.forecastList {
+  background-color: #f9f9f9; /* Fondo claro */
+  border: 1px solid #ddd; /* Bordes sutiles */
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.forecastList img {
+  width: 60px;
+}
+
+.forecastList h4 {
+  margin: 0;
+  color: #333;
+}
+
+.forecastList p {
+  margin: 0;
+  color: #666;
+}
+
+.currentWeatherContainer{
+  background-color: #04032729;
+  border-radius: 10px;
+}
+.current-weather {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin: 0 auto;
+  max-width: 800px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.current-weather p {
+  margin: 10px 0;
+  font-size: 1.1em;
+  color: #666;
+}
+
+.imgContainer{
+  background-color: #f9f9f9;
+  display: math;
+  max-width: 100px;
+  max-height: 100px;
+  border: 1px solid #ddd;
+  border-radius: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+}
+
+.imgContainer img {
+  width: 100px; /* Ajusta según tus necesidades */
+}
+
+.localWeatherContainer{
+  padding-top: 8rem;
 }

@@ -1,9 +1,10 @@
 import Weather from './Weather';
 import Loader from './Loader';
 import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 
-const LocalWeather = () => {
+const LocalWeather = ({ isFiveDayForecast }) => {
   const [location, setLocation] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -56,11 +57,15 @@ const LocalWeather = () => {
   }
 
   return (
-    <div>
+    <div id='localWeatherContainer'>
     <h2>Weather in {location.name}, {location.country}</h2>
-    <Weather latitude={location.latitude} longitude={location.longitude} />
+    <Weather latitude={location.latitude} longitude={location.longitude} isFiveDayForecast={isFiveDayForecast}/>
     </div>
   );
+};
+
+LocalWeather.propTypes = {
+  isFiveDayForecast: PropTypes.bool
 };
 
 export default LocalWeather;

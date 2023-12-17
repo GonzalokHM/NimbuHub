@@ -2,7 +2,7 @@ import CityWeather from '../CityWeather';
 
 const CityWeatherPage = () => {
   return (
-    <CityWeather isForecast={false} />
+    <CityWeather isFiveDayForecast={false} />
   );
 };
 
