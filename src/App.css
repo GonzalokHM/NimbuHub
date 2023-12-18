@@ -60,9 +60,8 @@
 h3 {
   text-align: center;
   color: #fd6e00;
-  margin: 0 50px;
+  margin: 0 50px 20px;
   border-radius: 10px;
-  margin-bottom: 20px;
   background-color:var(--cd-background-color-n-002);
   box-shadow: 0 4px 30px var(--cd-box-shadow-color-n-003);
   backdrop-filter: blur(5px);
@@ -194,10 +193,10 @@ ul {
   #links{
     flex-direction: column;
 }
+h3{
+  margin: 0 60px 15px;
 }
-
-@media screen and (max-width: 530px) {
-  .forecastList{
-    padding: 3px;
-  }
+.forecastList{
+  padding: 3px;
+}
 }
