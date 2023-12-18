@@ -1,14 +1,14 @@
 #root {
+  --pr-color-n-0001: #e594002b;
+  --cd-background-color-n-002: rgba(255, 255, 255, 0.14);
+  --cd-box-shadow-color-n-003: rgba(0, 0, 0, 0.1);
+  --cd-border-color-n-004: rgba(255, 255, 255, 0.12);
+  --cd-border-color-n-004: rgba(255, 255, 255, 0.12);
+  --cd-pureBlack-n-000: #000000;
   max-width: 1280px;
   flex: auto;
 }
 
-#container {
-  display: flex;
-  text-align: center;
-  flex-direction: column;
-  align-items: center;
-}
 
 #nav {
   background-color: #f0f8ff; /* color claro, puedes ajustarlo */
@@ -33,30 +33,57 @@
 
 .link a {
   text-decoration: none;
-  color: #333; /* Color del texto, ajusta según tus preferencias */
+  color: #4d908e; /* Color del texto, ajusta según tus preferencias */
   font-weight: bold;
+  cursor: pointer;
+}
+
+.link a:hover {
+  color: #005f73;
+  text-decoration: underline;
+}
+
+.link.active a{
+  color: #90be6d;
+}
+
+.locationName{
+  color: #eae2b7;
+  border-radius: 10px;
+  padding: 2px 15px;
+  background-color:var(--cd-background-color-n-002);
+  box-shadow: 0 4px 30px var(--cd-box-shadow-color-n-003);
+  backdrop-filter: blur(5px);
+  border: 1px solid var(--cd-border-color-n-004);
 }
 
 h3 {
   text-align: center;
-  color: #7d93ff; /* Color del texto */
+  color: #fd6e00;
+  margin: 0 50px;
+  border-radius: 10px;
   margin-bottom: 20px;
+  background-color:var(--cd-background-color-n-002);
+  box-shadow: 0 4px 30px var(--cd-box-shadow-color-n-003);
+  backdrop-filter: blur(5px);
+  border: 1px solid var(--cd-border-color-n-004);
 }
 
 ul {
   list-style: none;
   padding: 0;
   margin: 0 auto;
-  max-width: 600px; /* Ajusta el ancho máximo según tus necesidades */
+  max-width: 600px;
 }
 
 .forecastList {
-  background-color: #f9f9f9; /* Fondo claro */
-  border: 1px solid #ddd; /* Bordes sutiles */
+  background-color:var(--cd-background-color-n-002);
   padding: 10px;
   margin-bottom: 10px;
-  border-radius: 10px; /* Bordes redondeados */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  border: 1px solid var(--cd-border-color-n-004);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -68,26 +95,27 @@ ul {
 
 .forecastList h4 {
   margin: 0;
-  color: #333;
+  color: var(--cd-pureBlack-n-000);
 }
 
 .forecastList p {
   margin: 0;
-  color: #666;
+  color: var(--cd-pureBlack-n-000);
+} 
+
+.forecastData{
+  display: flex;
 }
 
-.currentWeatherContainer{
-  background-color: #04032729;
-  border-radius: 10px;
-}
 .current-weather {
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
+  background-color: rgb(82 215 255 / 10%);
+  box-shadow: 0 4px 30px var(--cd-box-shadow-color-n-003);
+  backdrop-filter: blur(5px);
+  border: 1px solid var(--cd-border-color-n-004);
   padding: 15px;
   margin: 0 auto;
   max-width: 800px;
   border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -97,7 +125,7 @@ ul {
 .current-weather p {
   margin: 10px 0;
   font-size: 1.1em;
-  color: #666;
+  color: var(--cd-pureBlack-n-000);
 }
 
 .imgContainer{
@@ -112,9 +140,64 @@ ul {
 }
 
 .imgContainer img {
-  width: 100px; /* Ajusta según tus necesidades */
+  width: 100px;
 }
 
 .localWeatherContainer{
   padding-top: 8rem;
+}
+
+#selectCity{
+  border-radius: 5px;
+  background-color: #f3722c;
+  font-size: 15px;
+  color: aliceblue;
+  padding: 2px;
+  margin-top: 30px;
+}
+
+
+/* Estilos para el botón hamburguesa */
+.hamburger {
+  display: none;
+  font-size: 30px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 530px) {
+  .hamburger {
+    display: block;
+  }
+
+  #nav {
+    display: none;
+    text-align: center;
+  }
+
+  #nav.open {
+    display: block;
+  }
+
+
+  #nav ul {
+    padding: 0;
+  }
+
+  #nav ul li {
+    margin-bottom: 10px;
+  }
+  .link{
+    padding: 0;
+  }
+  #links{
+    flex-direction: column;
+}
+}
+
+@media screen and (max-width: 530px) {
+  .forecastList{
+    padding: 3px;
+  }
 }

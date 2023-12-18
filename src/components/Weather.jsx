@@ -55,8 +55,8 @@ const Weather = ({ latitude, longitude, isFiveDayForecast }) => {
       dt: data.dt,
       dt_txt: data.dt_txt,
       weather: {
-        main: data.weather[0].main,
         description: data.weather[0].description,
+        icon: data.weather[0].icon
       },
       temp: data.main.temp,
       humidity: data.main.humidity,
@@ -92,11 +92,14 @@ const Weather = ({ latitude, longitude, isFiveDayForecast }) => {
             <ul>
               {next5DaysData.map((data) => (
                 <li className='forecastList' key={data.dt}>
-                  <div>
-                  <h4>{new Date(data.dt * 1000).toLocaleDateString()}</h4> 
-                  <p>{data.weather.main}, {data.weather.description}</p>
-                  <p>Humidity: {data.humidity}%</p>
-                  <p>Temperature: {convertKelvinToCelsius(data.temp)}°C</p>
+                  <h4>{new Date(data.dt * 1000).toLocaleDateString('es-ES', {
+                       day: '2-digit', month: '2-digit', year: '2-digit'
+                      })}
+                  </h4> 
+                  <div className='forecastData'>
+                  <p>{data.weather.description}</p>
+                  <p>💧{data.humidity}%</p>
+                  <p>🌡️{convertKelvinToCelsius(data.temp)}°C</p>
                   </div>
                   <img
                   src={`http://openweathermap.org/img/w/${data.weather.icon}.png`}
@@ -111,7 +114,7 @@ const Weather = ({ latitude, longitude, isFiveDayForecast }) => {
             <h3>Current Weather</h3>
             <div className="current-weather">
               <p>
-              <strong>Temperature:</strong> {convertKelvinToCelsius(weatherData.current.temp)} °C
+              <strong>🌡️</strong> {convertKelvinToCelsius(weatherData.current.temp)} °C
               </p>
               <p>
               <strong>Weather:</strong> {weatherData.current.weather[0].description}

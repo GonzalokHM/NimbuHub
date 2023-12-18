@@ -22,8 +22,7 @@ const CityWeather = ({ isFiveDayForecast }) => {
 
   return (
     <div>
-      <h2>Weather by City</h2>
-      <select value={selectedCity} onChange={handleCityChange}>
+      <select id='selectCity' value={selectedCity} onChange={handleCityChange}>
         <option value="" disabled>
           Select a city
         </option>

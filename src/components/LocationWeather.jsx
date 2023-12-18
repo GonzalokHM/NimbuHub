@@ -58,7 +58,7 @@ const LocalWeather = ({ isFiveDayForecast }) => {
 
   return (
     <div id='localWeatherContainer'>
-    <h2>Weather in {location.name}, {location.country}</h2>
+    <h2 className='locationName'>Weather in {location.name}, {location.country}</h2>
     <Weather latitude={location.latitude} longitude={location.longitude} isFiveDayForecast={isFiveDayForecast}/>
     </div>
   );
