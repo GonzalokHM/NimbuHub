@@ -40,7 +40,7 @@ const LocalWeather = ({ isFiveDayForecast }) => {
       try {
         const apiKey = import.meta.env.VITE_OPENWEATHERMAP_API_KEY;
         const response = await axios.get(
-          `http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${apiKey}`
+          `https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${apiKey}`
         );
         return response.data[0];
       } catch (error) {

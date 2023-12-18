@@ -102,7 +102,7 @@ const Weather = ({ latitude, longitude, isFiveDayForecast }) => {
                   <p>🌡️{convertKelvinToCelsius(data.temp)}°C</p>
                   </div>
                   <img
-                  src={`http://openweathermap.org/img/w/${data.weather.icon}.png`}
+                  src={`https://openweathermap.org/img/w/${data.weather.icon}.png`}
                   alt={data.weather.description}
                   />
                 </li>
@@ -122,7 +122,7 @@ const Weather = ({ latitude, longitude, isFiveDayForecast }) => {
             </div>
             <div className='imgContainer'>
             <img
-              src={`http://openweathermap.org/img/w/${weatherData.current.weather[0].icon}.png`}
+              src={`https://openweathermap.org/img/w/${weatherData.current.weather[0].icon}.png`}
               alt={weatherData.current.weather[0].description}
             />
             </div>
