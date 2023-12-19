@@ -23,7 +23,7 @@ const LocalWeather = ({ isFiveDayForecast }) => {
       } catch (error) {
         console.error('Error getting location:', error);
       } finally {
-        setIsLoading(false); // Indicar que la carga ha finalizado, ya sea con éxito o error.
+        setIsLoading(false);
       }
     };
 
@@ -52,14 +52,20 @@ const LocalWeather = ({ isFiveDayForecast }) => {
     getLocation(); 
   }, []);
 
-  if (isLoading) {
+  if (isLoading || !location) {
     return <Loader />;
   }
 
   return (
     <div id='localWeatherContainer'>
-    <h2 className='locationName'>Weather in {location.name}, {location.country}</h2>
-    <Weather latitude={location.latitude} longitude={location.longitude} isFiveDayForecast={isFiveDayForecast}/>
+      {location ? (
+        <>
+          <h2 className='locationName'>Weather in {location.name}, {location.country}</h2>
+          <Weather latitude={location.latitude} longitude={location.longitude} isFiveDayForecast={isFiveDayForecast}/>
+        </>
+      ) : (
+        <div>Location information is not available.</div> // Mensaje alternativo si no hay datos de ubicación
+      )}
     </div>
   );
 };

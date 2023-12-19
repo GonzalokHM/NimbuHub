@@ -104,7 +104,8 @@ const Weather = ({ latitude, longitude, isFiveDayForecast }) => {
                   </div>
                   <img
                   src={`https://openweathermap.org/img/w/${data.weather.icon}.png`}
-                  alt={data.weather.description}
+                  alt={data.weather.description} 
+                  width="50" height="50"
                   />
                 </li>
               ))}
@@ -125,6 +126,7 @@ const Weather = ({ latitude, longitude, isFiveDayForecast }) => {
             <img
               src={`https://openweathermap.org/img/w/${weatherData.current.weather[0].icon}.png`}
               alt={weatherData.current.weather[0].description}
+              width="100" height="100"
             />
             </div>
           </div>

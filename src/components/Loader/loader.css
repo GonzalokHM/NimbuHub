@@ -24,7 +24,6 @@
     top: 50%;
     left: 50%;
     transform-origin: bottom;
-    animation: spin 12s linear infinite;
     z-index: 1;
   }
   
@@ -69,20 +68,6 @@
     bottom: 0;
     animation: fall linear infinite;
   }
-
-  @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-  
-  .ray0 { transform: rotate(0deg) translate(-20px); }
-  .ray1 { transform: rotate(45deg) translate(-20px); }
-  .ray2 { transform: rotate(90deg) translate(-20px); }
-  .ray3 { transform: rotate(135deg) translate(-20px); }
-  .ray4 { transform: rotate(180deg) translate(-20px); }
-  .ray5 { transform: rotate(225deg) translate(-20px); }
-  .ray6 { transform: rotate(270deg) translate(-20px); }
-  .ray7 { transform: rotate(315deg) translate(-20px); }
   
   @keyframes fall {
     to {

@@ -11,12 +11,12 @@
 
 
 #nav {
-  background-color: #f0f8ff; /* color claro, puedes ajustarlo */
+  background-color: #f0f8ff;
   border-radius: 20px;
   padding: 10px;
   margin: 0 auto;
-  max-width: 600px; /* Ajusta según tus necesidades */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* sombra ligera para dar efecto 3D */
+  max-width: 600px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 #links {
@@ -24,7 +24,7 @@
   padding: 0;
   margin: 0;
   display: flex;
-  justify-content: space-around; /* Distribuye los elementos de manera uniforme */
+  justify-content: space-around;
 }
 
 .link {
@@ -33,7 +33,7 @@
 
 .link a {
   text-decoration: none;
-  color: #4d908e; /* Color del texto, ajusta según tus preferencias */
+  color: #4d908e;
   font-weight: bold;
   cursor: pointer;
 }
@@ -88,10 +88,6 @@ ul {
   justify-content: space-between;
 }
 
-.forecastList img {
-  width: 60px;
-}
-
 .forecastList h4 {
   margin: 0;
   color: var(--cd-pureBlack-n-000);
@@ -139,9 +135,6 @@ ul {
 
 }
 
-.imgContainer img {
-  width: 100px;
-}
 
 .localWeatherContainer{
   padding-top: 8rem;
