@@ -1,7 +1,7 @@
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import Loader from './Loader';
+import Loader from './Loader/Loader';
 
 const Weather = ({ latitude, longitude, isFiveDayForecast }) => {
   const [weatherData, setWeatherData] = useState(null);
@@ -23,15 +23,16 @@ const Weather = ({ latitude, longitude, isFiveDayForecast }) => {
           return;
         }
         
-        console.log("endpoin:", endpoint);
         const response = await axios.get(endpoint);
         console.log("API response data:", response.data);
         setWeatherData(response.data);
+      
       } catch (error) {
         console.error('Error fetching weather data:', error);
       }finally {
-        setIsLoading(false); // Indicar que la carga ha finalizado, ya sea con éxito o error.
+        setIsLoading(false);
       }
+
     };
     // Llamamos a la función de obtener datos meteorológicos cuando la geolocalización está disponible
     if (latitude && longitude) {

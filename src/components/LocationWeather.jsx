@@ -1,5 +1,5 @@
 import Weather from './Weather';
-import Loader from './Loader';
+import Loader from './Loader/Loader';
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
