@@ -52,7 +52,7 @@ const LocalWeather = ({ isFiveDayForecast }) => {
     getLocation(); 
   }, []);
 
-  if (isLoading || !location) {
+  if (isLoading ) {
     return <Loader />;
   }
 
@@ -64,7 +64,7 @@ const LocalWeather = ({ isFiveDayForecast }) => {
           <Weather latitude={location.latitude} longitude={location.longitude} isFiveDayForecast={isFiveDayForecast}/>
         </>
       ) : (
-        <div>Location information is not available.</div> // Mensaje alternativo si no hay datos de ubicación
+        <div>Location information is not available.</div>
       )}
     </div>
   );
