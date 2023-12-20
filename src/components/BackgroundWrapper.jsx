@@ -10,7 +10,8 @@ const BackgroundWrapper = ({ children }) => {
   }, []);
 
   const backgroundStyle = {
-    backgroundImage: `url(${isNight ? '/night.png' : '/day.png'})`,
+    color: isNight ? 'var(--cd-pureWhite-n-001)' : '--cd-pureBlack-n-000',
+    backgroundImage: `url(${isNight ? '/night.webp' : '/day.webp'})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     height: '100vh',

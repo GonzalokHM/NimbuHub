@@ -94,7 +94,7 @@ const Weather = ({ latitude, longitude, isFiveDayForecast }) => {
               {next5DaysData.map((data) => (
                 <li className='forecastList' key={data.dt}>
                   <h4>{new Date(data.dt * 1000).toLocaleDateString('es-ES', {
-                       day: '2-digit', month: '2-digit', year: '2-digit'
+                       weekday: 'long', day: '2-digit', month: '2-digit'
                       })}
                   </h4> 
                   <div className='forecastData'>
@@ -116,7 +116,7 @@ const Weather = ({ latitude, longitude, isFiveDayForecast }) => {
             <h3>Current Weather</h3>
             <div className="current-weather">
               <p>
-              <strong>🌡️</strong> {convertKelvinToCelsius(weatherData.current.temp)} °C
+              <strong>🌡️</strong> {convertKelvinToCelsius(weatherData.current.temp)}°C
               </p>
               <p>
               <strong>Weather:</strong> {weatherData.current.weather[0].description}

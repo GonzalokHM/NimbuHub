@@ -3,8 +3,9 @@ import LocalWeatherPage from './components/pages/LocalWeatherPage';
 import CityWeatherPage from './components/pages/CityWeatherPage'
 import LocalForecastPage from './components/pages/LocalForecastPage';
 import CityForecastPage from './components/pages/CityForecastPage';
-import  BackgroundWrapper from './components/BackgroundWrapper';
+import BackgroundWrapper from './components/BackgroundWrapper';
 import NavigationBar from './components/NavigationBar'
+import Footer from './components/Footer';
 import './App.css'
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
          <Route path="/localForecast" element={<LocalForecastPage />} />
          <Route path="/cityForecast" element={<CityForecastPage />} />
        </Routes>
+       <Footer/>
      </Router>
     </BackgroundWrapper>
   )
