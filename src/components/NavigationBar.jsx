@@ -6,6 +6,11 @@ const NavigationBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const isActive = (path) => location.pathname === path;
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+  
   return (
     <>
       <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
@@ -14,16 +19,16 @@ const NavigationBar = () => {
       <nav id='nav' className={menuOpen ? 'open' : ''}>
         <ul id='links'>
           <li className={`link ${isActive('/') ? 'active' : ''}`}>
-            <Link to="/">Home</Link>
+            <Link to="/" onClick={closeMenu}>Home</Link>
           </li>
           <li className={`link ${isActive('/city') ? 'active' : ''}`}>
-            <Link to="/city">City Weather</Link>
+            <Link to="/city" onClick={closeMenu}>City Weather</Link>
           </li>
           <li className={`link ${isActive('/localForecast') ? 'active' : ''}`}>
-            <Link to="/localForecast">Local Forecast</Link>
+            <Link to="/localForecast" onClick={closeMenu}>Local Forecast</Link>
           </li>
           <li className={`link ${isActive('/cityForecast') ? 'active' : ''}`}>
-            <Link to="/cityForecast">City Forecast</Link>
+            <Link to="/cityForecast" onClick={closeMenu}>City Forecast</Link>
           </li>
         </ul>
       </nav>

@@ -11,10 +11,40 @@
   --LinK-hover:#005f73;
   --LinK-active:#90be6d;
   --forecast-date:#621708;
-  /* max-width: 1280px; */
-  flex: auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
 }
 
+* {
+
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+  h3 {
+    text-align: center;
+    color: #fd6e00;
+    margin: 40px 50px 20px;
+    border-radius: 10px;
+    background-color:var(--cd-background-color-n-002);
+    box-shadow: 0 4px 30px var(--cd-box-shadow-color-n-003);
+    backdrop-filter: blur(5px);
+    border: 1px solid var(--cd-border-color-n-004);
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 600px;
+  }
+
+/* nav */
 
 #nav {
   background-color: var(--cd-iceWhite-n-011);
@@ -24,6 +54,8 @@
   max-width: 600px;
   box-shadow: 0 0 10px var(--cd-box-shadow-color-n-0033);
 }
+
+/* LINKS */
 
 #links {
   list-style: none;
@@ -53,6 +85,8 @@
   color:var(--LinK-active);
 }
 
+/* LOCATION */
+
 .locationName{
   color: var(--LocationName);
   border-radius: 10px;
@@ -63,23 +97,11 @@
   border: 1px solid var(--cd-border-color-n-004);
 }
 
-h3 {
-  text-align: center;
-  color: #fd6e00;
-  margin: 40px 50px 20px;
-  border-radius: 10px;
-  background-color:var(--cd-background-color-n-002);
-  box-shadow: 0 4px 30px var(--cd-box-shadow-color-n-003);
-  backdrop-filter: blur(5px);
-  border: 1px solid var(--cd-border-color-n-004);
+.localWeatherContainer{
+  padding-top: 8rem;
 }
 
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 0 auto;
-  max-width: 600px;
-}
+/* FORECAST */
 
 .forecastList {
   background-color:var(--cd-background-color-n-002);
@@ -108,6 +130,8 @@ ul {
   margin: 0 20px;
 }
 
+/* current-weather */
+
 .current-weather {
   background-color: rgb(82 215 255 / 10%);
   box-shadow: 0 4px 30px var(--cd-box-shadow-color-n-003);
@@ -129,6 +153,8 @@ ul {
   color: var( --cd-pureBlack-n-000);
 }
 
+
+
 .imgContainer{
   background-color: var(--cd-pureWhite-n-001);
   display: math;
@@ -141,9 +167,7 @@ ul {
 }
 
 
-.localWeatherContainer{
-  padding-top: 8rem;
-}
+/* CITY-WEATHER */
 
 #selectCity{
   border-radius: 5px;
@@ -155,7 +179,7 @@ ul {
 }
 
 
-/* Estilos para el botón hamburguesa */
+/* botón hamburguer */
 .hamburger {
   display: none;
   font-size: 30px;
@@ -164,6 +188,8 @@ ul {
   border-radius: 20px;
 }
 
+/* MEDIA QUERIES */
+
 @media screen and (max-width: 530px) {
   .hamburger {
     display: block;
@@ -171,10 +197,9 @@ ul {
 
   #nav {
     display: none;
-    position: absolute;
     top: 41px;
     width: 100%;
-    background: rgba(255,255,255,0.91); /* Fondo ligeramente transparente */
+    background: rgba(255,255,255,0.91);
 
   }
 

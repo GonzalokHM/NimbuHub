@@ -7,13 +7,11 @@ const Weather = ({ latitude, longitude, isFiveDayForecast }) => {
   const [weatherData, setWeatherData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [next5DaysData, setNext5DaysData] = useState([]);
-  console.log("isFiveDayForecast antes:", isFiveDayForecast);
   useEffect(() => {
     const fetchWeather = async () => {
       try {
         const apiKey = import.meta.env.VITE_OPENWEATHERMAP_API_KEY;
         let endpoint;
-        console.log("isFiveDayForecast dentro fecthWeather:", isFiveDayForecast);
         if (latitude && longitude) {
           endpoint = isFiveDayForecast
           ? `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}`
@@ -24,7 +22,6 @@ const Weather = ({ latitude, longitude, isFiveDayForecast }) => {
         }
         
         const response = await axios.get(endpoint);
-        console.log("API response data:", response.data);
         setWeatherData(response.data);
       
       } catch (error) {
