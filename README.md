@@ -28,4 +28,4 @@ Si deseas clonar y ejecutar este proyecto en tu máquina local, sigue estos paso
 
 1. Clona el repositorio:
    ```bash
-   git clone https://github.com/GonzalokHM/nimbushub.git
+   git clone https://github.com/GonzalokHM/NimbuHub.git
