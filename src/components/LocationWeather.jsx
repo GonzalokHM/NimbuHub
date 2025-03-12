@@ -1,77 +1,84 @@
-import Weather from './Weather';
-import Loader from './Loader/Loader';
-import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import axios from 'axios';
+import Weather from './Weather'
+import Loader from './Loader'
+import { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
+import axios from 'axios'
 
 const LocalWeather = ({ isFiveDayForecast }) => {
-  const [location, setLocation] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [location, setLocation] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const getLocation = async () => {
       try {
         if (navigator.geolocation) {
-          const position = await getCurrentPosition();
-          const { latitude, longitude } = position.coords;
-          const locationData = await fetchLocation(latitude, longitude);
-          setLocation({ latitude, longitude, ...locationData });
+          const position = await getCurrentPosition()
+          const { latitude, longitude } = position.coords
+          const locationData = await fetchLocation(latitude, longitude)
+          setLocation({ latitude, longitude, ...locationData })
         } else {
-          const GeolocationError ='You must enable geolocation permissions to use the application.';
-          alert(GeolocationError);
+          const GeolocationError =
+            'You must enable geolocation permissions to use the application.'
+          alert(GeolocationError)
         }
       } catch (error) {
-        console.error('Error getting location:', error);
+        console.error('Error getting location:', error)
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
-    };
+    }
 
     const getCurrentPosition = () => {
       return new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(
           (position) => resolve(position),
           (error) => reject(error)
-        );
-      });
-    };
+        )
+      })
+    }
 
     const fetchLocation = async (latitude, longitude) => {
       try {
-        const apiKey = import.meta.env.VITE_OPENWEATHERMAP_API_KEY;
+        const apiKey = import.meta.env.VITE_OPENWEATHERMAP_API_KEY
         const response = await axios.get(
           `https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${apiKey}`
-        );
-        return response.data[0];
+        )
+        return response.data[0]
       } catch (error) {
-        console.error('Error fetching location:', error);
-        return null;
+        console.error('Error fetching location:', error)
+        return null
       }
-    };
+    }
 
-    getLocation(); 
-  }, []);
+    getLocation()
+  }, [])
 
-  if (isLoading ) {
-    return <Loader />;
+  if (isLoading) {
+    return <Loader />
   }
 
   return (
     <div id='localWeatherContainer'>
       {location ? (
         <>
-          <h2 className='locationName'>Weather in {location.name}, {location.country}</h2>
-          <Weather latitude={location.latitude} longitude={location.longitude} isFiveDayForecast={isFiveDayForecast}/>
+          <h2 className='locationName'>
+            Weather in {location.name}, {location.country}
+          </h2>
+          <Weather
+            latitude={location.latitude}
+            longitude={location.longitude}
+            isFiveDayForecast={isFiveDayForecast}
+          />
         </>
       ) : (
         <div>Location information is not available.</div>
       )}
     </div>
-  );
-};
+  )
+}
 
 LocalWeather.propTypes = {
   isFiveDayForecast: PropTypes.bool
-};
+}
 
-export default LocalWeather;
+export default LocalWeather
