@@ -15,6 +15,21 @@ Puedes acceder a la aplicación y consultar el clima en el siguiente enlace:
 - Obtén el clima basado en tu ubicación actual.
 - Interfaz sencilla y fácil de usar.
 
+
+# Guía de Rutas
+
+- **/**  
+  Clima local (geolocalización).
+
+- **/city**  
+  Lista de ciudades. Al hacer clic, redirige a `/city/:lat/:lon`.
+
+- **/city/:lat/:lon**  
+  Clima para coordenadas específicas.
+
+- **/localForecast** y **/cityForecast**  
+  Pronósticos local y por ciudad.
+  
 ## Tecnologías utilizadas
 
 - React
